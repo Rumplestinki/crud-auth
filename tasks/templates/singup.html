@@ -1,12 +1,16 @@
-<h1>Singup</h1>
+{% extends 'base.html' %} 
 
-{{error}}
+{% block content %}
+    <h1>Singup</h1>
 
-<form method="POST">
-    {% csrf_token %}
+    {{error}}
 
-    {{form.as_p}}
-        <button>
-            Singup
-        </button>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+
+        {{form.as_p}}
+            <button>
+                Singup
+            </button>
+    </form>
+{% endblock %}
