@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from django.db import IntegrityError
 
 # Create your views here.
 
+
 def home(request):
     return render(request, 'home.html')
+
 
 def helloword(request):
     # El cliente solicita datos
@@ -39,9 +41,36 @@ def helloword(request):
             'error': "Las contraseñas no coinciden"
         })
 
+
 def tasks(request):
     return render(request, 'tasks.html')
+
 
 def singout(request):
     logout(request)
     return redirect('home')
+
+
+def signin(request):
+    # Si el metodo es GET renderiza el html
+    if request.method == 'GET':
+        return render(request, 'signin.html', {
+            'form': AuthenticationForm
+        })
+    # Si es POST autentifica el usuario
+    else:
+        # guarda los datos en user
+        user = authenticate(
+            request, username=request.POST['username'], 
+            password=request.POST['password'])
+        # Si no exixte redirecciona y muestra un error
+        if user is None:
+            return render(request, 'signin.html', {
+                'form': AuthenticationForm,
+                'error': 'El usuario y/o la contraseña son incorrectos'
+            })
+        # Si existe guarda la secion y lo redirecciona
+        else:
+            login(request, user)
+            return redirect('tasks')
+        
