@@ -11,6 +11,6 @@ class Task(models.Model):
     important = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    # Muestra en el panel de admin el title y el usuario
+    # Muestra en el panel de admin (Task) el title y el usuario
     def __str__(self):
         return self.title + ' - by ' + self.user.username
