@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
+from django.utils import timezone
 # Create your views here.
 
 
@@ -52,6 +53,7 @@ def tasks(request):
 
 def task_detail(request, task_id):
     if request.method == 'GET':
+        # Muestra los datos de la tarea
         task = get_object_or_404(Task, pk=task_id, user=request.user)
         form = TaskForm(instance=task)
         return render(request, 'task_detail.html', {
@@ -60,6 +62,7 @@ def task_detail(request, task_id):
         })
     else:
         try:
+            # Actualiza los datos de la tarea
             task = get_object_or_404(Task, pk=task_id, user=request.user)
             form = TaskForm(request.POST, instance=task)
             form.save()
@@ -71,6 +74,22 @@ def task_detail(request, task_id):
                 'error': 'Error al actualizar'
             })
             
+            
+def complete_task(request, task_id):
+    # Cambia el estado y marca como tarea completada
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.datecomplete = timezone.now()
+        task.save()
+        return redirect('task')
+    
+
+def delete_task(request, task_id):
+    # Elimina la tarea
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')
 
 
 def create_task(request):
