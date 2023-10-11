@@ -7,12 +7,12 @@ from django.db import IntegrityError
 from .forms import TaskForm
 from .models import Task
 from django.utils import timezone
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
 
 def home(request):
     return render(request, 'home.html')
-
 
 def singup(request):
     # El cliente solicita datos
@@ -43,7 +43,8 @@ def singup(request):
             'error': "Las contraseñas no coinciden"
         })
 
-
+# login_requied nos ayuda a que no puedan acceder a las rutas sin iniciar secion
+@login_required
 def tasks(request):
     # Filtra las tareas por usuario y que no esten completadas
     tasks = Task.objects.filter(user=request.user, datecomplete__isnull=True)
@@ -51,7 +52,7 @@ def tasks(request):
         'tasks': tasks
     })
 
-
+@login_required
 def tasks_completed(request):
     # Filtra las tareas por usuario completadas
     tasks = Task.objects.filter(user=request.user, datecomplete__isnull=False).order_by
@@ -60,7 +61,7 @@ def tasks_completed(request):
         'tasks': tasks
     })
 
-
+@login_required
 def task_detail(request, task_id):
     if request.method == 'GET':
         # Muestra los datos de la tarea
@@ -83,8 +84,8 @@ def task_detail(request, task_id):
                 'form': form,
                 'error': 'Error al actualizar'
             })
-            
-            
+
+@login_required         
 def complete_task(request, task_id):
     # Cambia el estado y marca como tarea completada
     task = get_object_or_404(Task, pk=task_id, user=request.user)
@@ -92,8 +93,8 @@ def complete_task(request, task_id):
         task.datecomplete = timezone.now()
         task.save()
         return redirect('task')
-    
 
+@login_required
 def delete_task(request, task_id):
     # Elimina la tarea
     task = get_object_or_404(Task, pk=task_id, user=request.user)
@@ -101,7 +102,7 @@ def delete_task(request, task_id):
         task.delete()
         return redirect('tasks')
 
-
+@login_required
 def create_task(request):
     
     if request.method == 'GET':
@@ -121,11 +122,10 @@ def create_task(request):
                 'error': 'Ingrese datos validos'
             })
 
-
+@login_required
 def singout(request):
     logout(request)
     return redirect('home')
-
 
 def signin(request):
     # Si el metodo es GET renderiza el html
