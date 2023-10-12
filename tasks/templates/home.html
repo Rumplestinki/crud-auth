@@ -1,18 +1,31 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-    <h1>Home</h1>
-    <p>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem
-    voluptates esse repellendus a commodi reiciendis. Totam velit unde et, officia
-    suscipit ducimus nobis perferendis placeat omnis reiciendis ab ipsam quae quis
-    distinctio, accusantium illo adipisci similique magni nulla. Alias culpa eos
-    eveniet repudiandae incidunt voluptate! Asperiores natus suscipit tenetur
-    consequuntur quae neque voluptate dolorum aperiam sequi, harum officiis earum
-    placeat voluptas perspiciatis nihil alias ratione dignissimos doloribus iusto
-    corporis? Culpa ullam, eaque incidunt minus dicta quisquam, aliquid est,
-    quidem veritatis adipisci illum hic non tenetur. Eos officia eligendi enim
-    aspernatur possimus commodi recusandae architecto eum delectus? Tenetur
-    consequuntur ipsum atque.
-    </p>
+    <main class="container py-5">
+        <section class="card card-body">
+            <h1 class="display-1 text-center">Django App</h1>
+            <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem
+            voluptates esse repellendus a commodi reiciendis. Totam velit unde et, officia
+            suscipit ducimus nobis perferendis placeat omnis reiciendis ab ipsam quae quis
+            distinctio, accusantium illo adipisci similique magni nulla. Alias culpa eos
+            eveniet repudiandae incidunt voluptate! Asperiores natus suscipit tenetur
+            consequuntur quae neque voluptate dolorum aperiam sequi, harum officiis earum
+            placeat voluptas perspiciatis nihil alias ratione dignissimos doloribus iusto
+            corporis? Culpa ullam, eaque incidunt minus dicta quisquam, aliquid est,
+            quidem veritatis adipisci illum hic non tenetur. Eos officia eligendi enim
+            aspernatur possimus commodi recusandae architecto eum delectus? Tenetur
+            consequuntur ipsum atque.
+            </p>
+
+            <div class="text text-center">
+                <a class="btn btn-primary" href="/signin/">
+                    Signin
+                </a>
+                <a class="btn btn-primary" href="/signup">
+                    Signup
+                </a>
+            </div>
+        </section>
+    </main>
 {% endblock %}

@@ -14,10 +14,10 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'home.html')
 
-def singup(request):
+def signup(request):
     # El cliente solicita datos
     if request.method == 'GET':
-        return render(request, 'singup.html', {
+        return render(request, 'signup.html', {
             'form': UserCreationForm
         })
     else:
@@ -33,12 +33,12 @@ def singup(request):
                 return redirect('tasks')
             except IntegrityError:
                 # Cuando el usuario ya existe
-                return render(request, 'singup.html', {
+                return render(request, 'signup.html', {
                     'form': UserCreationForm,
                     'error': "El usuario ya existe"
                 })
         # Cuando las contraseñas no coiciden
-        return render(request, 'singup.html', {
+        return render(request, 'signup.html', {
             'form': UserCreationForm,
             'error': "Las contraseñas no coinciden"
         })
@@ -123,7 +123,7 @@ def create_task(request):
             })
 
 @login_required
-def singout(request):
+def signout(request):
     logout(request)
     return redirect('home')
 
