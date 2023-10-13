@@ -12,8 +12,10 @@
                         {{ task.title }}
                     </h5>
                     <p class="card-text">{{ task.description }}</p>
+                    {% if task.datecomplete %}
                     <p class="card-text">{{ task.user.username }}</p>
-                    <div class="card-footer text-muted mb-3">{{ task.datecomplete|date:'M j Y:i' }}</div>
+                    <div class="card-footer text-muted mb-3 text-center">{{ task.datecomplete|date:'M j Y:i' }}</div>
+                    {% endif %}
                     <a href="{% url 'task_detail' task.id %}" class="btn btn-primary">Editar</a>
                 </div>
             </div>

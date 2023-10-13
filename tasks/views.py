@@ -92,7 +92,7 @@ def complete_task(request, task_id):
     if request.method == 'POST':
         task.datecomplete = timezone.now()
         task.save()
-        return redirect('task')
+        return redirect('tasks')
 
 @login_required
 def delete_task(request, task_id):
